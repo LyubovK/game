@@ -84,7 +84,7 @@ $randomButton.addEventListener("click", () => {
     $arenas.appendChild(playerWin());
   } else if ($hp2 <= 0) {
     $arenas.appendChild(playerWin(player1.name));
-  } else if (($hp1 <= 0) & ($hp2 <= 0)) {
+  } else if ($hp1 <= 0) {
     $arenas.appendChild(playerWin(player2.name));
   }
 });
