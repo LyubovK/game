@@ -79,12 +79,13 @@ const playerWin = (name) => {
 $randomButton.addEventListener("click", () => {
   const $hp1 = changeHP(player1);
   const $hp2 = changeHP(player2);
-  if ($hp1 <= 0) {
-    $arenas.appendChild(playerWin("Dima"));
-  } else if ($hp2 < 0) {
-    $arenas.appendChild(playerWin("Liuba"));
-  } else if ($hp1 <= 0 && $hp2 < 0) {
+
+  if (($hp1 <= 0) & ($hp2 <= 0)) {
     $arenas.appendChild(playerWin());
+  } else if ($hp2 <= 0) {
+    $arenas.appendChild(playerWin(player1.name));
+  } else if (($hp1 <= 0) & ($hp2 <= 0)) {
+    $arenas.appendChild(playerWin(player2.name));
   }
 });
 
