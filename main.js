@@ -22,20 +22,20 @@ const player2 = {
   },
 };
 
-const createPlayer = (tag, clasName) => {
-  const newElement = document.createElement(tag);
-  newElement.classList.add(clasName);
+const createElement = (tag, clasName) => {
+  const $tag = document.createElement(tag);
+  $tag.classList.add(clasName);
 
-  return newElement;
+  return $tag;
 };
 
 const addPlayer = (obj) => {
-  const $player = createPlayer("div", "player" + obj.player);
-  const $progressbar = createPlayer("div", "progressbar");
-  const $life = createPlayer("div", "life");
-  const $name = createPlayer("div", "name");
-  const $character = createPlayer("div", "character");
-  const $img = createPlayer("img", "img");
+  const $player = createElement("div", "player" + obj.player);
+  const $progressbar = createElement("div", "progressbar");
+  const $life = createElement("div", "life");
+  const $name = createElement("div", "name");
+  const $character = createElement("div", "character");
+  const $img = createElement("img", "img");
 
   $name.innerText = obj.name;
   $life.style.width = obj.hp + "%";
@@ -51,27 +51,32 @@ const addPlayer = (obj) => {
 };
 
 const changeHP = (player) => {
-  const $playerLife = document.querySelector(`.player${player.player} .life`);
+  const $playerLife = document.querySelector(
+    ".player" + player.player + " .life"
+  );
   const randomCount = Math.ceil(Math.random() * 20);
   player.hp -= randomCount;
   $playerLife.style.width = player.hp + "%";
 
   if (player.hp < 0) {
+    player.hp = 0;
     $playerLife.style.width = 0;
-    $randomButton.disabled = true;
-    if (player.name === "player1") {
-      $arenas.appendChild(playerWin(player2.name));
+    // $arenas.appendChild(playerWin(player.name));
+    if (player.name == "Liuba") {
+      $arenas.appendChild(playerWin("Dima"));
     } else {
-      $arenas.appendChild(playerWin(player2.name));
+      $arenas.appendChild(playerWin("Liuba"));
     }
   }
 };
 
 const playerWin = (name) => {
+  if (player1.hp > player2.hp) {
+  }
   const $loseTitle = document.createElement("div");
   $loseTitle.classList.add("loseTitle");
   $loseTitle.innerText = name + " win";
-
+  $randomButton.disabled = true;
   return $loseTitle;
 };
 
