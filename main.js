@@ -52,7 +52,7 @@ const createReloadButton = () => {
   $reloadButton.innerText = "Restart";
   $boxButton.appendChild($reloadButton);
   $arenas.appendChild($boxButton);
-  return $boxButton;
+  return $boxButton.appendChild($reloadButton);
 };
 
 const addPlayer = (obj) => {
@@ -97,8 +97,7 @@ const playerWin = (name) => {
   return $loseTitle;
 };
 
-createReloadButton();
-const $reloadButton = document.querySelector(".reloadWrap .button");
+const $reloadButton = createReloadButton();
 
 $randomButton.addEventListener("click", () => {
   player1.changeHP(getRandom(20));
