@@ -49,9 +49,10 @@ const createElement = (tag, clasName) => {
 const createReloadButton = () => {
   const $boxButton = createElement("div", "reloadWrap");
   const $reloadButton = createElement("button", "button");
+
   $reloadButton.innerText = "Restart";
+  $boxButton.appendChild($reloadButton);
   $arenas.appendChild($boxButton);
-  return $boxButton.appendChild($reloadButton);
 };
 
 const addPlayer = (obj) => {
@@ -96,17 +97,24 @@ const playerWin = (name) => {
   return $loseTitle;
 };
 
-const $reloadButton = createReloadButton();
+createReloadButton();
+const $reloadButton = document.querySelector(".reloadWrap .button");
+console.log($reloadButton);
 
+$reloadButton.addEventListener("click", () => {
+  window.location.reload();
+});
 $randomButton.addEventListener("click", () => {
   player1.changeHP(getRandom(20));
   player2.changeHP(getRandom(20));
   player1.renderHP();
   player2.renderHP();
+
   if (player1.hp === 0 || player2.hp === 0) {
     $randomButton.disabled = true;
     $reloadButton.classList.add("visible");
   }
+
   if (player1.hp === 0 && player1.hp < player2.hp) {
     $arenas.appendChild(playerWin(player2.name));
   } else if (player2.hp === 0 && player2.hp < player1.hp) {
@@ -114,10 +122,6 @@ $randomButton.addEventListener("click", () => {
   } else if (player1.hp === 0 && player2.hp === 0) {
     $arenas.appendChild(playerWin());
   }
-});
-
-$reloadButton.addEventListener("click", () => {
-  window.location.reload();
 });
 
 $arenas.appendChild(addPlayer(player1));
