@@ -1,5 +1,4 @@
 const $arenas = document.querySelector(".arenas");
-const $control = document.querySelector(".control");
 const $randomButton = document.querySelector(".button");
 const player1 = {
   name: "Liuba",
@@ -38,21 +37,20 @@ const player2 = {
   renderHP,
   elHP,
 };
-const createReloadButton = () => {
-  const $boxButton = document.createElement("div");
-  const $reloadButton = document.createElement("button");
-  $boxButton.classList.add("reloadWrap");
-  $reloadButton.classList.add("button");
-  $reloadButton.innerText = "Restart";
-  $boxButton.appendChild($reloadButton);
-
-  return $boxButton;
-};
 const createElement = (tag, clasName) => {
   const $tag = document.createElement(tag);
   $tag.classList.add(clasName);
 
   return $tag;
+};
+
+const createReloadButton = () => {
+  const $boxButton = createElement("div", "reloadWrap");
+  const $reloadButton = createElement("button", "button");
+  $reloadButton.innerText = "Restart";
+  $boxButton.appendChild($reloadButton);
+  $arenas.appendChild($boxButton);
+  return $boxButton;
 };
 
 const addPlayer = (obj) => {
@@ -97,7 +95,7 @@ const playerWin = (name) => {
   return $loseTitle;
 };
 
-$control.appendChild(createReloadButton());
+createReloadButton();
 const $reloadButton = document.querySelector(".reloadWrap .button");
 
 $randomButton.addEventListener("click", () => {
@@ -105,9 +103,9 @@ $randomButton.addEventListener("click", () => {
   player2.changeHP(getRandom(20));
   player1.renderHP();
   player2.renderHP();
-  if (player1.hp1 === 0 || player2.hp === 0) {
+  if (player1.hp === 0 || player2.hp === 0) {
     $randomButton.disabled = true;
-    // $reloadButton.classList.add("visible");
+    $reloadButton.classList.add("visible");
   }
   if (player1.hp === 0 && player1.hp < player2.hp) {
     $arenas.appendChild(playerWin(player2.name));
