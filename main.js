@@ -39,7 +39,9 @@ const player2 = {
 };
 const createElement = (tag, clasName) => {
   const $tag = document.createElement(tag);
-  $tag.classList.add(clasName);
+  if (clasName) {
+    $tag.classList.add(clasName);
+  }
 
   return $tag;
 };
@@ -59,7 +61,7 @@ const addPlayer = (obj) => {
   const $life = createElement("div", "life");
   const $name = createElement("div", "name");
   const $character = createElement("div", "character");
-  const $img = createElement("img", "img");
+  const $img = createElement("img");
 
   $name.innerText = obj.name;
   $life.style.width = obj.hp + "%";
