@@ -50,7 +50,6 @@ const createReloadButton = () => {
   const $boxButton = createElement("div", "reloadWrap");
   const $reloadButton = createElement("button", "button");
   $reloadButton.innerText = "Restart";
-  $boxButton.appendChild($reloadButton);
   $arenas.appendChild($boxButton);
   return $boxButton.appendChild($reloadButton);
 };
