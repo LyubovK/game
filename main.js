@@ -52,10 +52,11 @@ const createReloadButton = () => {
   const $reloadButton = createElement("button", "button");
 
   $reloadButton.innerText = "Restart";
-  $boxButton.appendChild($reloadButton);
-  $arenas.appendChild($boxButton);
 
   $reloadButton.addEventListener("click", () => window.location.reload());
+
+  $boxButton.appendChild($reloadButton);
+  $arenas.appendChild($boxButton);
 };
 
 const addPlayer = (obj) => {
@@ -105,6 +106,7 @@ $randomButton.addEventListener("click", () => {
   player2.changeHP(getRandom(20));
   player1.renderHP();
   player2.renderHP();
+
   if (player1.hp === 0 || player2.hp === 0) {
     $randomButton.disabled = true;
     createReloadButton();
