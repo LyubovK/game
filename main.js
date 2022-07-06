@@ -1,5 +1,6 @@
 const $arenas = document.querySelector(".arenas");
 const $randomButton = document.querySelector(".button");
+
 const player1 = {
   name: "Liuba",
   player: 1,
@@ -53,6 +54,8 @@ const createReloadButton = () => {
   $reloadButton.innerText = "Restart";
   $boxButton.appendChild($reloadButton);
   $arenas.appendChild($boxButton);
+
+  $reloadButton.addEventListener("click", () => window.location.reload());
 };
 
 const addPlayer = (obj) => {
@@ -97,22 +100,14 @@ const playerWin = (name) => {
   return $loseTitle;
 };
 
-createReloadButton();
-const $reloadButton = document.querySelector(".reloadWrap .button");
-console.log($reloadButton);
-
-$reloadButton.addEventListener("click", () => {
-  window.location.reload();
-});
 $randomButton.addEventListener("click", () => {
   player1.changeHP(getRandom(20));
   player2.changeHP(getRandom(20));
   player1.renderHP();
   player2.renderHP();
-
   if (player1.hp === 0 || player2.hp === 0) {
     $randomButton.disabled = true;
-    $reloadButton.classList.add("visible");
+    createReloadButton();
   }
 
   if (player1.hp === 0 && player1.hp < player2.hp) {

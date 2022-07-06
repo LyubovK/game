@@ -283,7 +283,7 @@ body {
 }
 
 .reloadWrap .button {
-  visibility: hidden;
+  /* visibility: hidden; */
   margin-top: 0;
 }
 .reloadWrap .button.visible {
