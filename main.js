@@ -11,7 +11,7 @@ const HIT = {
 const ATTACK = ["head", "body", "foot"];
 
 const player1 = {
-  name: "Liuba",
+  name: "Kitana",
   player: 1,
   hp: 100,
   changeHP(randomCount) {
@@ -30,7 +30,7 @@ const player1 = {
 };
 
 const player2 = {
-  name: "Dima",
+  name: "Scorpion",
   player: 2,
   hp: 100,
   changeHP(randomCount) {
@@ -124,6 +124,14 @@ enemyAttack = () => {
   };
 };
 
+const checkAttack = (attack, defence, player) => {
+  if (attack.hit === defence.defence) {
+    player.changeHP(0);
+  } else {
+    player.changeHP(attack.value);
+  }
+};
+
 $formFight.addEventListener("submit", (e) => {
   e.preventDefault();
   const attack = {};
@@ -142,17 +150,8 @@ $formFight.addEventListener("submit", (e) => {
     item.checked = false;
   }
 
-  if (attack.hit === enemy.defence) {
-    player2.changeHP(0);
-  } else {
-    player2.changeHP(attack.value);
-  }
-  if (attack.defence === enemy.hit) {
-    player1.changeHP(0);
-  } else {
-    player1.changeHP(enemy.value);
-  }
-
+  checkAttack(attack, enemy, player2);
+  checkAttack(enemy, attack, player1);
   player1.renderHP();
   player2.renderHP();
 
@@ -169,8 +168,8 @@ $formFight.addEventListener("submit", (e) => {
     $arenas.appendChild(playerWin());
   }
 
-  console.log("enemy", enemy);
-  console.log("enemy hp", player2.hp);
   console.log("attack", attack);
   console.log("attack hp", player1.hp);
+  console.log("enemy", enemy);
+  console.log("enemy hp", player2.hp);
 });
