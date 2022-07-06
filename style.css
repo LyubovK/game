@@ -41,34 +41,58 @@ body {
 .wall-left {
   position: absolute;
   width: 87px;
+<<<<<<< HEAD
   background-image: url(assets/wall-left.png);
   min-height: 100vh;
   background-size: contain;
   background-repeat: repeat-y;
+=======
+  background: url(assets/wall-left.png);
+  height: 100vh;
+  background-size: contain;
+  background-repeat: no-repeat;
+>>>>>>> 78668c118ac21be3a99ffa9f52984270acd390e8
   top: 0;
   z-index: 100;
   left: 50%;
   transform: translate(-450px, 0px);
+<<<<<<< HEAD
   height: 100%;
+=======
+>>>>>>> 78668c118ac21be3a99ffa9f52984270acd390e8
 }
 
 .wall-right {
   position: absolute;
   width: 87px;
+<<<<<<< HEAD
   background-image: url(./assets/wall-right.png);
   min-height: 100vh;
   background-size: contain;
   background-repeat: repeat-y;
+=======
+  background: url(./assets/wall-right.png);
+  height: 100vh;
+  background-size: contain;
+  background-repeat: no-repeat;
+>>>>>>> 78668c118ac21be3a99ffa9f52984270acd390e8
   top: 0;
   z-index: 100;
   right: 50%;
   transform: translate(450px, 0px);
+<<<<<<< HEAD
   height: 100%;
+=======
+>>>>>>> 78668c118ac21be3a99ffa9f52984270acd390e8
 }
 
 .arenas {
   width: 786px;
+<<<<<<< HEAD
   height: 578px;
+=======
+  height: 70vh;
+>>>>>>> 78668c118ac21be3a99ffa9f52984270acd390e8
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -172,7 +196,11 @@ body {
 .chat {
   width: 786px;
   height: 30vh;
+<<<<<<< HEAD
   background-image: url(./assets/versus.png);
+=======
+  background: url(./assets/versus.png);
+>>>>>>> 78668c118ac21be3a99ffa9f52984270acd390e8
   background-size: cover;
   background-position: center;
   border-top: 4px solid #f5d100;
@@ -199,21 +227,44 @@ body {
 
 .character img {
   height: 100%;
+<<<<<<< HEAD
   position: absolute;
   bottom: 0;
+=======
+>>>>>>> 78668c118ac21be3a99ffa9f52984270acd390e8
 }
 
 .fight {
   position: absolute;
   z-index: 100;
+<<<<<<< HEAD
   top: 30%;
   width: 300px;
   left: 50%;
   transform: translate(-50%, 0%);
+=======
+  top: 20%;
+  width: 300px;
+>>>>>>> 78668c118ac21be3a99ffa9f52984270acd390e8
 }
 
 .fight img {
   width: 100%;
+<<<<<<< HEAD
+=======
+}
+
+.control {
+  position: absolute;
+  width: 200px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+>>>>>>> 78668c118ac21be3a99ffa9f52984270acd390e8
 }
 
 .button {
@@ -226,7 +277,11 @@ body {
   text-transform: uppercase;
   background-color: #f5d100;
   border: none;
+<<<<<<< HEAD
   margin-top: 0;
+=======
+  margin-top: 150px;
+>>>>>>> 78668c118ac21be3a99ffa9f52984270acd390e8
   margin-left: auto;
   margin-right: auto;
   border-radius: 4px;
@@ -254,6 +309,7 @@ body {
 }
 .button:active::after {
   top: 1px;
+<<<<<<< HEAD
 }
 
 .button:disabled {
@@ -271,11 +327,17 @@ body {
 
 .button:disabled:active::after {
   top: 4px;
+=======
+>>>>>>> 78668c118ac21be3a99ffa9f52984270acd390e8
 }
 
 .loseTitle {
   position: absolute;
+<<<<<<< HEAD
   top: 22%;
+=======
+  top: 25%;
+>>>>>>> 78668c118ac21be3a99ffa9f52984270acd390e8
   left: 50%;
   font-size: 36px;
   transform: translate(-50%, 0%);
@@ -283,18 +345,26 @@ body {
   z-index: 1000;
   color: white;
   font-family: "Mortal Kombat 3";
+<<<<<<< HEAD
   text-shadow: 2px 2px 2px #cd0e03;
+=======
+>>>>>>> 78668c118ac21be3a99ffa9f52984270acd390e8
 }
 
 .reloadWrap {
   position: absolute;
+<<<<<<< HEAD
   top: 54px;
+=======
+  top: 10%;
+>>>>>>> 78668c118ac21be3a99ffa9f52984270acd390e8
   z-index: 1000;
   left: 50%;
   transform: translate(-50%, 0%);
 }
 
 .reloadWrap .button {
+<<<<<<< HEAD
   margin-top: 0;
 }
 
@@ -401,4 +471,11 @@ input[type="radio"]:checked + label > span::before {
 }
 input[type="radio"]:checked + label > span:hover {
   background: none;
+=======
+  /* visibility: hidden; */
+  margin-top: 0;
+}
+.reloadWrap .button.visible {
+  visibility: visible;
+>>>>>>> 78668c118ac21be3a99ffa9f52984270acd390e8
 }
