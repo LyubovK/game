@@ -1,5 +1,4 @@
 const $arenas = document.querySelector(".arenas");
-
 // const $randomButton = document.querySelector(".button");
 const $formFight = document.querySelector(".control");
 
@@ -110,7 +109,6 @@ const playerWin = (name) => {
 
   return $loseTitle;
 };
-
 
 // $randomButton.addEventListener("click", () => {
 //   player1.changeHP(getRandom(20));
