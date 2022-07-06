@@ -1,5 +1,5 @@
 const $arenas = document.querySelector(".arenas");
-<<<<<<< HEAD
+
 // const $randomButton = document.querySelector(".button");
 const $formFight = document.querySelector(".control");
 
@@ -10,9 +10,6 @@ const HIT = {
 };
 
 const ATTACK = ["head", "body", "foot"];
-=======
-const $randomButton = document.querySelector(".button");
->>>>>>> 78668c118ac21be3a99ffa9f52984270acd390e8
 
 const player1 = {
   name: "Liuba",
@@ -114,7 +111,7 @@ const playerWin = (name) => {
   return $loseTitle;
 };
 
-<<<<<<< HEAD
+
 // $randomButton.addEventListener("click", () => {
 //   player1.changeHP(getRandom(20));
 //   player1.renderHP();
@@ -135,27 +132,6 @@ const playerWin = (name) => {
 //     $arenas.appendChild(playerWin());
 //   }
 // });
-=======
-$randomButton.addEventListener("click", () => {
-  player1.changeHP(getRandom(20));
-  player2.changeHP(getRandom(20));
-  player1.renderHP();
-  player2.renderHP();
-
-  if (player1.hp === 0 || player2.hp === 0) {
-    $randomButton.disabled = true;
-    createReloadButton();
-  }
-
-  if (player1.hp === 0 && player1.hp < player2.hp) {
-    $arenas.appendChild(playerWin(player2.name));
-  } else if (player2.hp === 0 && player2.hp < player1.hp) {
-    $arenas.appendChild(playerWin(player1.name));
-  } else if (player1.hp === 0 && player2.hp === 0) {
-    $arenas.appendChild(playerWin());
-  }
-});
->>>>>>> 78668c118ac21be3a99ffa9f52984270acd390e8
 
 $arenas.appendChild(addPlayer(player1));
 $arenas.appendChild(addPlayer(player2));
