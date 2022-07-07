@@ -124,18 +124,8 @@ enemyAttack = () => {
   };
 };
 
-const checkAttack = (attack, defence, player) => {
-  if (attack.hit === defence.defence) {
-    player.changeHP();
-  } else {
-    player.changeHP(attack.value);
-  }
-};
-
 const playerAttack = () => {
-  const enemy = enemyAttack();
   const attack = {};
-
   for (let item of $formFight) {
     if (item.checked && item.name === "hit") {
       attack.value = getRandom(HIT[item.value]);
@@ -148,10 +138,7 @@ const playerAttack = () => {
 
     item.checked = false;
   }
-  checkAttack(attack, enemy, player2);
-  checkAttack(enemy, attack, player1);
-  player1.renderHP();
-  player2.renderHP();
+  return attack;
 };
 
 const showResult = () => {
@@ -166,8 +153,18 @@ const showResult = () => {
 
 $formFight.addEventListener("submit", (e) => {
   e.preventDefault();
-  playerAttack();
-  enemyAttack();
+
+  const enemy = enemyAttack();
+  const player = playerAttack();
+
+  if (player.defence !== enemy.hit) {
+    player1.changeHP(enemy.value);
+    player1.renderHP();
+  }
+  if (player.defence !== player.hit) {
+    player2.changeHP(enemy.value);
+    player2.renderHP();
+  }
 
   if (player1.hp === 0 || player2.hp === 0) {
     $randomButton.disabled = true;
