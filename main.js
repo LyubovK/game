@@ -15,7 +15,7 @@ const player1 = {
   player: 1,
   hp: 100,
   changeHP(randomCount) {
-    this.hp -= randomCount;
+    if (randomCount) this.hp -= randomCount;
     if (this.hp <= 0) this.hp = 0;
 
     return this.hp;
@@ -34,7 +34,7 @@ const player2 = {
   player: 2,
   hp: 100,
   changeHP(randomCount) {
-    this.hp -= randomCount;
+    if (randomCount) this.hp -= randomCount;
     if (this.hp <= 0) this.hp = 0;
 
     return this.hp;
@@ -126,16 +126,15 @@ enemyAttack = () => {
 
 const checkAttack = (attack, defence, player) => {
   if (attack.hit === defence.defence) {
-    player.changeHP(0);
+    player.changeHP();
   } else {
     player.changeHP(attack.value);
   }
 };
 
-$formFight.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const attack = {};
+const playerAttack = () => {
   const enemy = enemyAttack();
+  const attack = {};
 
   for (let item of $formFight) {
     if (item.checked && item.name === "hit") {
@@ -149,17 +148,13 @@ $formFight.addEventListener("submit", (e) => {
 
     item.checked = false;
   }
-
   checkAttack(attack, enemy, player2);
   checkAttack(enemy, attack, player1);
   player1.renderHP();
   player2.renderHP();
+};
 
-  if (player1.hp === 0 || player2.hp === 0) {
-    $randomButton.disabled = true;
-    createReloadButton();
-  }
-
+const showResult = () => {
   if (player1.hp === 0 && player1.hp < player2.hp) {
     $arenas.appendChild(playerWin(player2.name));
   } else if (player2.hp === 0 && player2.hp < player1.hp) {
@@ -167,9 +162,17 @@ $formFight.addEventListener("submit", (e) => {
   } else if (player1.hp === 0 && player2.hp === 0) {
     $arenas.appendChild(playerWin());
   }
+};
 
-  console.log("attack", attack);
-  console.log("attack hp", player1.hp);
-  console.log("enemy", enemy);
-  console.log("enemy hp", player2.hp);
+$formFight.addEventListener("submit", (e) => {
+  e.preventDefault();
+  playerAttack();
+  enemyAttack();
+
+  if (player1.hp === 0 || player2.hp === 0) {
+    $randomButton.disabled = true;
+    createReloadButton();
+  }
+
+  showResult();
 });
