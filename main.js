@@ -198,7 +198,7 @@ const generateLogs = (type, pl1, pl2, hp) => {
       text = logs[type][getRandom(18) - 1]
         .replace('[playerKick]', pl1.name)
         .replace('[playerDefence]', pl2.name);
-      el = `<p>${time} ${text} <br> ${pl2.name} - ${hp}%</p>`;
+      el = `<p>${time} ${text} <br> ${pl2.name} - ${hp}/100</p>`;
       break;
     case 'defence':
       text = logs[type][getRandom(8) - 1]
