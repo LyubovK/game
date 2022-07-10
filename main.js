@@ -3,11 +3,6 @@ const $randomButton = document.querySelector('.buttonWrap .button');
 const $formFight = document.querySelector('.control');
 const $chat = document.querySelector('.chat');
 
-const data = new Date();
-const hour = data.getHours();
-const minutes = data.getMinutes();
-const time = `${hour}:${minutes}`;
-
 const HIT = {
   head: 30,
   body: 25,
@@ -189,46 +184,65 @@ const playerAttack = () => {
   return attack;
 };
 
-const generateLogs = (type, pl1, pl2, hp) => {
-  let el = '';
-  let text = '';
+const getTime = () => {
+  const data = new Date();
+  const timeFormat = (time) => ('' + time).padStart(2, '0');
+  const $time =
+    timeFormat(data.getHours()) + ':' + timeFormat(data.getMinutes());
+  return $time;
+};
 
+const getTexLog = (type, pl1, pl2) => {
+  let text = '';
+  let time = getTime();
   switch (type) {
-    case 'hit':
-      text = logs[type][getRandom(18) - 1]
-        .replace('[playerKick]', pl1.name)
-        .replace('[playerDefence]', pl2.name);
-      el = `<p>${time} ${text} <br> ${pl2.name} - ${hp}/100</p>`;
-      break;
-    case 'defence':
-      text = logs[type][getRandom(8) - 1]
-        .replace('[playerKick]', pl1.name)
-        .replace('[playerDefence]', pl2.name);
-      el = `<p>${time} ${text}</p>`;
-      break;
-    case 'end':
-      text = logs[type][getRandom(3) - 1]
-        .replace('[playerWins]', pl1.name)
-        .replace('[playerLose]', pl2.name);
-      el = `<p>${time} ${text}</p>`;
-      break;
-    case 'draw':
-      text = logs[type];
-      el = `<p>${time} ${text}</p>`;
-      break;
-    default:
-      text = logs['start']
+    case 'start':
+      text = logs[type]
         .replace('[time]', time)
         .replace('[player1]', player1.name)
         .replace('[player2]', player2.name);
+      break;
+    case 'hit':
+    case 'defence':
+      text = logs[type][getRandom(logs[type].length) - 1]
+        .replace('[playerKick]', pl1)
+        .replace('[playerDefence]', pl2);
+      break;
+    case 'end':
+      text = logs[type][getRandom(logs[type].length) - 1]
+        .replace('[playerWins]', pl1)
+        .replace('[playerLose]', pl2);
+      break;
+    case 'draw':
+      text = logs[type];
+      break;
+  }
+
+  return text;
+};
+
+const generateLogs = (type, pl1, pl2, hp) => {
+  let el = '';
+  let text = getTexLog(type, pl1, pl2);
+  let time = getTime();
+  switch (type) {
+    case 'start':
       el = `<p>${text}</p>`;
+      break;
+    case 'hit':
+      el = `<p>${time} ${text} <br> ${pl2} - ${hp} - ${100 - hp}/100</p>`;
+      break;
+    case 'defence':
+    case 'end':
+    case 'draw':
+      el = `<p>${time} ${text}</p>`;
       break;
   }
 
   $chat.insertAdjacentHTML('afterbegin', el);
 };
 
-generateLogs();
+generateLogs('start');
 
 const showResult = () => {
   if (player1.hp === 0 || player2.hp === 0) {
@@ -237,10 +251,10 @@ const showResult = () => {
   }
   if (player1.hp === 0 && player1.hp < player2.hp) {
     $arenas.appendChild(playerWin(player2.name));
-    generateLogs('end', player1, player2);
+    generateLogs('end', player1.name, player2.name);
   } else if (player2.hp === 0 && player2.hp < player1.hp) {
     $arenas.appendChild(playerWin(player1.name));
-    generateLogs('end', player2, player1);
+    generateLogs('end', player2.name, player1.name);
   } else if (player1.hp === 0 && player2.hp === 0) {
     $arenas.appendChild(playerWin());
     generateLogs('draw');
@@ -256,16 +270,16 @@ $formFight.addEventListener('submit', (e) => {
   if (player.defence !== enemy.hit) {
     player1.changeHP(enemy.value);
     player1.renderHP();
-    generateLogs('hit', player2, player1, enemy.value);
+    generateLogs('hit', player2.name, player1.name, enemy.value);
   } else {
-    generateLogs('defence', player1, player2);
+    generateLogs('defence', player1.name, player2.name);
   }
   if (player.defence !== player.hit) {
     player2.changeHP(player.value);
     player2.renderHP();
-    generateLogs('hit', player1, player2, player.value);
+    generateLogs('hit', player1.name, player2.name, player.value);
   } else {
-    generateLogs('defence', player2, player1);
+    generateLogs('defence', player2.name, player1.name);
   }
 
   showResult();
