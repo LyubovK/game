@@ -153,9 +153,6 @@ const playerWin = (name) => {
   return $loseTitle;
 };
 
-$arenas.appendChild(addPlayer(player1));
-$arenas.appendChild(addPlayer(player2));
-
 const enemyAttack = () => {
   const hit = ATTACK[getRandom(3) - 1];
   const defence = ATTACK[getRandom(3) - 1];
@@ -185,64 +182,53 @@ const playerAttack = () => {
 };
 
 const getTime = () => {
-  const data = new Date();
+  const date = new Date();
   const timeFormat = (time) => ('' + time).padStart(2, '0');
   const $time =
-    timeFormat(data.getHours()) + ':' + timeFormat(data.getMinutes());
+    timeFormat(date.getHours()) + ':' + timeFormat(date.getMinutes());
   return $time;
 };
 
 const getTexLog = (type, pl1, pl2) => {
-  let text = '';
-  let time = getTime();
   switch (type) {
     case 'start':
-      text = logs[type]
-        .replace('[time]', time)
+      return logs[type]
+        .replace('[time]', getTime())
         .replace('[player1]', player1.name)
         .replace('[player2]', player2.name);
-      break;
     case 'hit':
     case 'defence':
-      text = logs[type][getRandom(logs[type].length) - 1]
+      return logs[type][getRandom(logs[type].length) - 1]
         .replace('[playerKick]', pl1)
         .replace('[playerDefence]', pl2);
-      break;
     case 'end':
-      text = logs[type][getRandom(logs[type].length) - 1]
+      return logs[type][getRandom(logs[type].length) - 1]
         .replace('[playerWins]', pl1)
         .replace('[playerLose]', pl2);
-      break;
     case 'draw':
-      text = logs[type];
-      break;
+      return logs[type];
   }
-
-  return text;
 };
 
 const generateLogs = (type, pl1, pl2, hp) => {
   let el = '';
   let text = getTexLog(type, pl1, pl2);
-  let time = getTime();
   switch (type) {
     case 'start':
       el = `<p>${text}</p>`;
       break;
     case 'hit':
-      el = `<p>${time} ${text} <br> ${pl2} - ${hp} - ${100 - hp}/100</p>`;
+      el = `<p>${getTime()} ${text} <br> ${pl2} - ${hp} - ${100 - hp}/100</p>`;
       break;
     case 'defence':
     case 'end':
     case 'draw':
-      el = `<p>${time} ${text}</p>`;
+      el = `<p>${getTime()} ${text}</p>`;
       break;
   }
 
   $chat.insertAdjacentHTML('afterbegin', el);
 };
-
-generateLogs('start');
 
 const showResult = () => {
   if (player1.hp === 0 || player2.hp === 0) {
@@ -284,3 +270,8 @@ $formFight.addEventListener('submit', (e) => {
 
   showResult();
 });
+
+generateLogs('start');
+
+$arenas.appendChild(addPlayer(player1));
+$arenas.appendChild(addPlayer(player2));
