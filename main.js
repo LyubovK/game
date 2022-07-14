@@ -1,23 +1,31 @@
-import generateLogs from './generateLog.js';
-import createElement from './createElement.js';
-import showResult from './showResult.js';
-import { enemyAttack, playerAttack } from './playersAttacks.js';
-import { player1, player2 } from './player.js';
+import { createElement, getRandom } from './js/utils/helpful.js';
+import { player1, player2 } from './js/player.js';
+import generateLogs from './js/generateLog.js';
+import showResult from './js/showResult.js';
 
 const $arenas = document.querySelector('.arenas');
 const $formFight = document.querySelector('.control');
 
+const HIT = {
+  head: 30,
+  body: 25,
+  foot: 20,
+};
+
+const ATTACK = ['head', 'body', 'foot'];
+
 const addPlayer = (obj) => {
-  const $player = createElement('div', 'player' + obj.player);
+  const { name, hp, img, player } = obj;
+  const $player = createElement('div', `player${player}`);
   const $progressbar = createElement('div', 'progressbar');
   const $life = createElement('div', 'life');
   const $name = createElement('div', 'name');
   const $character = createElement('div', 'character');
   const $img = createElement('img');
 
-  $name.innerText = obj.name;
-  $life.style.width = obj.hp + '%';
-  $img.src = obj.img;
+  $name.innerText = name;
+  $life.style.width = `${hp}%`;
+  $img.src = img;
 
   $player.appendChild($progressbar);
   $player.appendChild($character);
@@ -26,6 +34,34 @@ const addPlayer = (obj) => {
   $character.appendChild($img);
 
   return $player;
+};
+
+const enemyAttack = () => {
+  const hit = ATTACK[getRandom(3) - 1];
+  const defence = ATTACK[getRandom(3) - 1];
+
+  return {
+    value: getRandom(HIT[hit]),
+    hit,
+    defence,
+  };
+};
+
+const playerAttack = () => {
+  const attack = {};
+  for (let item of $formFight) {
+    if (item.checked && item.name === 'hit') {
+      attack.value = getRandom(HIT[item.value]);
+      attack.hit = item.value;
+    }
+
+    if (item.checked && item.name === 'defence') {
+      attack.defence = item.value;
+    }
+
+    item.checked = false;
+  }
+  return attack;
 };
 
 $formFight.addEventListener('submit', (e) => {
