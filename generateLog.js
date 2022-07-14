@@ -45,7 +45,7 @@ const generateLogs = (type, player1 = {}, player2 = {}, valueAttack) => {
       text = `${getTime()} ${text}`;
       break;
   }
-  $chat.insertAdjacentHTML('afterbegin', text);
+  $chat.insertAdjacentHTML('afterbegin', `<p>${text}</p>`);
 };
 
 export default generateLogs;
