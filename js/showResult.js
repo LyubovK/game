@@ -18,8 +18,7 @@ const createReloadButton = () => {
 };
 
 const playerWin = (name) => {
-  const $loseTitle = document.createElement('div');
-  $loseTitle.classList.add('loseTitle');
+  const $loseTitle = document.createElement('div').classList.add('loseTitle');
   if (name) {
     $loseTitle.innerText = name + ' wins';
   } else {
