@@ -14,8 +14,7 @@ const HIT = {
 
 const ATTACK = ['head', 'body', 'foot'];
 
-const addPlayer = (obj) => {
-  const { name, hp, img, player } = obj;
+const addPlayer = ({ name, hp, img, player }) => {
   const $player = createElement('div', `player${player}`);
   const $progressbar = createElement('div', 'progressbar');
   const $life = createElement('div', 'life');
@@ -67,20 +66,31 @@ const playerAttack = () => {
 $formFight.addEventListener('submit', (e) => {
   e.preventDefault();
 
-  const enemy = enemyAttack();
-  const player = playerAttack();
+  // const enemy = enemyAttack();
+  // const player = playerAttack();
 
-  if (player.defence !== enemy.hit) {
-    player1.changeHP(enemy.value);
+  const {
+    value: enemuValue,
+    hit: enemyHit,
+    defence: enemyDefence,
+  } = enemyAttack();
+  const {
+    value: playerValue,
+    hit: playerHit,
+    defence: playerDefence,
+  } = playerAttack();
+
+  if (playerDefence !== enemyHit) {
+    player1.changeHP(enemuValue);
     player1.renderHP();
-    generateLogs('hit', player2, player1, enemy.value);
+    generateLogs('hit', player2, player1, enemuValue);
   } else {
     generateLogs('defence', player1, player2);
   }
-  if (player.defence !== player.hit) {
+  if (enemyDefence !== playerHit) {
     player2.changeHP(player.value);
     player2.renderHP();
-    generateLogs('hit', player1, player2, player.value);
+    generateLogs('hit', player1, player2, playerValue);
   } else {
     generateLogs('defence', player2, player1);
   }
