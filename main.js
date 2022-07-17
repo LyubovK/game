@@ -1,84 +1,25 @@
-import { createElement, getRandom } from './js/utils/helpful.js';
 import { player1, player2 } from './js/player.js';
+
 import generateLogs from './js/generateLog.js';
 import showResult from './js/showResult.js';
+import Game from './js/Game/index.js';
 
-const $arenas = document.querySelector('.arenas');
 const $formFight = document.querySelector('.control');
 
-const HIT = {
-  head: 30,
-  body: 25,
-  foot: 20,
-};
-
-const ATTACK = ['head', 'body', 'foot'];
-
-const addPlayer = ({ name, hp, img, player }) => {
-  const $player = createElement('div', `player${player}`);
-  const $progressbar = createElement('div', 'progressbar');
-  const $life = createElement('div', 'life');
-  const $name = createElement('div', 'name');
-  const $character = createElement('div', 'character');
-  const $img = createElement('img');
-
-  $name.innerText = name;
-  $life.style.width = `${hp}%`;
-  $img.src = img;
-
-  $player.appendChild($progressbar);
-  $player.appendChild($character);
-  $progressbar.appendChild($life);
-  $progressbar.appendChild($name);
-  $character.appendChild($img);
-
-  return $player;
-};
-
-const enemyAttack = () => {
-  const hit = ATTACK[getRandom(3) - 1];
-  const defence = ATTACK[getRandom(3) - 1];
-
-  return {
-    value: getRandom(HIT[hit]),
-    hit,
-    defence,
-  };
-};
-
-const playerAttack = () => {
-  const attack = {};
-  for (let item of $formFight) {
-    if (item.checked && item.name === 'hit') {
-      attack.value = getRandom(HIT[item.value]);
-      attack.hit = item.value;
-    }
-
-    if (item.checked && item.name === 'defence') {
-      attack.defence = item.value;
-    }
-
-    item.checked = false;
-  }
-  return attack;
-};
+const game = new Game();
 
 $formFight.addEventListener('submit', (e) => {
   e.preventDefault();
-
-  // const enemy = enemyAttack();
-  // const player = playerAttack();
-
   const {
     value: enemuValue,
     hit: enemyHit,
     defence: enemyDefence,
-  } = enemyAttack();
+  } = game.enemyAttack();
   const {
     value: playerValue,
     hit: playerHit,
     defence: playerDefence,
-  } = playerAttack();
+  } = game.playerAttack();
 
   if (playerDefence !== enemyHit) {
     player1.changeHP(enemuValue);
@@ -88,7 +29,7 @@ $formFight.addEventListener('submit', (e) => {
     generateLogs('defence', player1, player2);
   }
   if (enemyDefence !== playerHit) {
-    player2.changeHP(player.value);
+    player2.changeHP(playerValue);
     player2.renderHP();
     generateLogs('hit', player1, player2, playerValue);
   } else {
@@ -98,7 +39,10 @@ $formFight.addEventListener('submit', (e) => {
   showResult();
 });
 
-generateLogs('start');
+const init = () => {
+  player1.createPlayer();
+  player2.createPlayer();
+  generateLogs('start');
+};
 
-$arenas.appendChild(addPlayer(player1));
-$arenas.appendChild(addPlayer(player2));
+init();

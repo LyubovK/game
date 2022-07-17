@@ -1,4 +1,4 @@
-import { createElement } from './utils/helpful.js';
+import { createElement } from './utils/index.js';
 import generateLogs from './generateLog.js';
 import { player1, player2 } from './player.js';
 
@@ -18,7 +18,7 @@ const createReloadButton = () => {
 };
 
 const playerWin = (name) => {
-  const $loseTitle = document.createElement('div').classList.add('loseTitle');
+  const $loseTitle = createElement('div', 'loseTitle');
   if (name) {
     $loseTitle.innerText = name + ' wins';
   } else {
@@ -29,20 +29,17 @@ const playerWin = (name) => {
 };
 
 const showResult = () => {
-  const { hp: playerOneHp, name: playerOneName } = player1;
-  const { hp: playerTwoHp, name: playerTwoName } = player2;
-
-  if (playerOneHp === 0 || playerTwoHp === 0) {
+  if (player1.hp === 0 || player2.hp === 0) {
     $randomButton.disabled = true;
     createReloadButton();
   }
-  if (playerOneHp === 0 && playerOneHp < playerTwoHp) {
-    $arenas.appendChild(playerWin(playerTwoName));
+  if (player1.hp === 0 && player1.hp < player2.hp) {
+    $arenas.appendChild(playerWin(player2.name));
     generateLogs('end', player1, player2);
-  } else if (playerTwoHp === 0 && playerTwoHp < playerOneHp) {
-    $arenas.appendChild(playerWin(playerOneName));
+  } else if (player2.hp === 0 && player2.hp < player1.hp) {
+    $arenas.appendChild(playerWin(player1.name));
     generateLogs('end', player2, player1);
-  } else if (playerOneHp === 0 && playerTwoHp === 0) {
+  } else if (player1.hp === 0 && player2.hp === 0) {
     $arenas.appendChild(playerWin());
     generateLogs('draw');
   }
