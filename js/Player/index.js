@@ -1,4 +1,7 @@
 import { createElement } from '../utils/index.js';
+import generateLogs from '../chat/generateLog.js';
+import { PLAYER1, PLAYER2 } from '../constants/index.js';
+import { game } from '../main.js';
 
 class Player {
   constructor(props) {
@@ -17,15 +20,9 @@ class Player {
     return this.hp;
   };
 
-  elHP = () => {
-    return document.querySelector(`.${this.selector} .life`);
-  };
+  elHP = () => document.querySelector(`.${this.selector} .life`);
 
-  renderHP = () => {
-    console.log(this.elHP());
-    console.log(this.selector);
-    return (this.elHP().style.width = `${this.hp}%`);
-  };
+  renderHP = () => (this.elHP().style.width = `${this.hp}%`);
 
   createPlayer = () => {
     const $player = createElement('div', this.selector);
@@ -51,6 +48,19 @@ class Player {
     $root.appendChild($player);
 
     return $player;
+  };
+
+  attack = ({ value, hit }, { defence }) => {
+    const player = this.player === 1 ? game.player1 : game.player2;
+    const enemy = this.player === 1 ? game.player2 : game.player1;
+
+    if (defence !== hit) {
+      this.changeHP(value);
+      this.renderHP();
+      generateLogs('hit', player, enemy, value);
+    } else {
+      generateLogs('defence', player, enemy);
+    }
   };
 }
 
