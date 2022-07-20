@@ -1,9 +1,30 @@
-import { getTime, getRandom } from './utils/helpful.js';
-import { player1, player2 } from './player.js';
+import Player from '../Player/index.js';
 
-const $chat = document.querySelector('.chat');
+export const PLAYER1 = new Player({
+  name: 'Kitana',
+  player: 1,
+  hp: 100,
+  img: 'http://reactmarathon-api.herokuapp.com/assets/kitana.gif',
+  rootSelector: '.arenas',
+});
 
-export const logs = {
+export const PLAYER2 = new Player({
+  name: 'Scorpion',
+  player: 2,
+  hp: 100,
+  img: 'http://reactmarathon-api.herokuapp.com/assets/scorpion.gif',
+  rootSelector: '.arenas',
+});
+
+export const HIT = {
+  head: 30,
+  body: 25,
+  foot: 20,
+};
+
+export const ATTACK = ['head', 'body', 'foot'];
+
+export const LOGS = {
   start:
     'Часы показывали [time], когда [player1] и [player2] бросили вызов друг другу.',
   end: [
@@ -43,50 +64,3 @@ export const logs = {
   ],
   draw: 'Ничья - это тоже победа!',
 };
-
-const getTexLog = (type, pl1, pl2) => {
-  switch (type) {
-    case 'start':
-      return logs[type]
-        .replace('[time]', getTime())
-        .replace('[player1]', player1.name)
-        .replace('[player2]', player2.name);
-    case 'hit':
-    case 'defence':
-      return logs[type][getRandom(logs[type].length) - 1]
-        .replace('[playerKick]', pl1)
-        .replace('[playerDefence]', pl2);
-    case 'end':
-      return logs[type][getRandom(logs[type].length) - 1]
-        .replace('[playerWins]', pl1)
-        .replace('[playerLose]', pl2);
-    case 'draw':
-      return logs[type];
-  }
-};
-
-const generateLogs = (type, player1 = {}, player2 = {}, valueAttack) => {
-  const { name: playerOneName } = player1;
-  const { name: playerTwoName, hp: playerTwoHp } = player2;
-
-  let text = getTexLog(type, playerOneName, playerTwoName);
-
-  switch (type) {
-    case 'start':
-      text = `${text}`;
-      break;
-    case 'hit':
-      if (valueAttack) {
-        text = `${getTime()} ${text} <br> ${playerTwoName} - ${valueAttack} - [${playerTwoHp}/100]`;
-      }
-      break;
-    case 'defence':
-    case 'end':
-    case 'draw':
-      text = `${getTime()} ${text}`;
-      break;
-  }
-  $chat.insertAdjacentHTML('afterbegin', `<p>${text}</p>`);
-};
-
-export default generateLogs;
